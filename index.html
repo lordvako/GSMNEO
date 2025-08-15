@@ -58,7 +58,7 @@ video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;filter
 </div>
 
 <script>
-/* 45 слайдов, разбитые на 5 разделов */
+/* ваши 45 слайдов и 5 разделов (менять не нужно) */
 const slides = [
   /* Intro 0-5 */
   '<h1>ESOMATEC | GSMneo</h1><h2>Production Control Systems – Hi-Tech Glass Inspection Machine</h2>',
@@ -67,7 +67,6 @@ const slides = [
   '<h1>The Company</h1><ul><li>Esomatec GmbH – based near Bremen (Germany)</li><li>Operating since 2011</li><li>Grown out of Busch&Spreen / Heye International</li><li>Dynamic and flexible company</li><li>First market appearance 2012 – glasstec Düsseldorf</li></ul>',
   '<h1>The Company</h1><ul><li>Experienced employees (up to 30 years in glass industry)</li><li>Engineers, mechanics, electricians, system developers</li></ul>',
   '<h1>The Company</h1><ul><li>Portfolio:<br>– Testing systems<br>– Tooling sets & spare parts<br>– Product development & cold-end services</li></ul>',
-  
 
   /* Portfolio 6-11 */
   '<h1>Portfolio – GDM</h1><ul><li>Wall Thickness Measuring Device</li><li>7-inch touch screen</li><li>Up to four measuring units</li><li>19-inch industrial case</li></ul><img src="media/image55.jpg" alt="">',
@@ -76,7 +75,6 @@ const slides = [
   '<h1>Portfolio – Toolings</h1><ul><li>Toolings for Inspection Machines</li><li>Infeed / outfeed equipment</li><li>Complete star-wheel assembly</li></ul><img src="media/image58.jpg" alt="">',
   '<h1>Portfolio – Toolings</h1><ul><li>Star wheels, infeed screws, guides, washers, gauges, mounts</li></ul><img src="media/image59.jpg" alt="">',
   '<h1>Portfolio – Service</h1><ul><li>Spare parts manufacturing</li><li>Customer-specific development</li><li>Interfaces to line/statistics systems</li></ul><img src="media/image60.jpg" alt="">',
-  
 
   /* GSMNeo 12-19 */
   '<h1>GSMneo</h1><img src="media/image62.jpg" alt="">',
@@ -86,9 +84,9 @@ const slides = [
   '<h1>GSMneo</h1><ul><li>Fast job change – minimal downtime</li><li>Symmetrical design – fewer spare parts</li></ul><img src="media/image65.jpg" alt="">',
   '<h1>GSMneo</h1><ul><li>Gauge / finish diameter</li><li>Planity, height, wall thickness</li><li>Ovality detection (non-contact)</li></ul><img src="media/image66.jpg" alt="">',
   '<h1>GSMneo</h1><ul><li>Mold number reader (Dot & Digital)</li><li>LED check detection</li><li>LoF (Line-over-Finish)</li></ul><img src="media/image67.jpg" alt="">',
-  
+  '<h1>Travel through the machine</h1>',
 
-  /* Inspection 20-28 */
+  /* Inspection 20-27 */
   '<h1>GSMneo – Infeed</h1><ul><li>Infeed stopper – software / button</li><li>Feathered pressure adjustment</li></ul><img src="media/image55.jpg" alt="">',
   '<h1>GSMneo – Infeed</h1><ul><li>Height & servo drive</li><li>Article-specific screws</li></ul><img src="media/image56.jpg" alt="">',
   '<h1>GSMneo – Rotations</h1><ul><li>Rotating wheel + feathered pressure</li><li>Servo drive, adjustable mount</li></ul><img src="media/image57.jpg" alt="">',
@@ -97,10 +95,11 @@ const slides = [
   '<h1>GSMneo – Ejection</h1><ul><li>Hammer, outlet, light-barrier control</li></ul><img src="media/image60.jpg" alt="">',
   '<h1>GSMneo – Planity</h1><ul><li>Linear-drive planity device</li><li>Exchangeable heads (bottle / jar)</li></ul><img src="media/image62.jpg" alt="">',
   '<h1>GSMneo – Gauging</h1><ul><li>Servo-driven gauging device</li><li>Exchangeable heads, all mouths</li></ul><img src="media/image63.jpg" alt="">',
-  '<h1>GSMneo – Height</h1><ul><li>Inner & outer height in one device</li><li>Separate adjustable values</li></ul><img src="media/image66.jpg" alt="">',
-  /* End 29-32 */
-  '<h1>GSMneo – LoF</h1><ul><li>Adjustable mount + sender/receiver</li></ul><img src="media/image67.jpg" alt="">',
+
+  /* End 28-32 */
+  '<h1>Travel Through Machine</h1><img src="media/video_travel.gif" alt="">',
   '<h1>Esomatec GmbH</h1><p>Your partner for production control systems.<br>Thank you for listening.</p>',
+  '<h1>Questions and Answers</h1>',
   '<h1>Thank you</h1><p>A business lives through its employees, its suppliers and its clients.</p>',
   '<h1>End</h1>'
 ];
@@ -110,8 +109,8 @@ const groups = [
   [0,5],  // Intro
   [6,11], // Portfolio
   [12,19],// GSMNeo
-  [20,28],// Inspection
-  [29,32] // End
+  [20,27],// Inspection
+  [28,32] // End
 ];
 const groupNames = ['Intro','Portfolio','GSMNeo','Inspection','End'];
 
@@ -135,12 +134,13 @@ function render(){
 }
 function nextSlide(){
   const [s,e] = groups.find(g => current>=g[0] && current<=g[1]);
-  current = (current < e) ? current+1 : s;
+  current = (current < e) ? current+1 : groups[(groups.findIndex(g=>g[0]===s)+1)%groups.length][0];
   render();
 }
 function prevSlide(){
   const [s,e] = groups.find(g => current>=g[0] && current<=g[1]);
-  current = (current > s) ? current-1 : e;
+  const idx = groups.findIndex(g=>g[0]===s);
+  current = (current > s) ? current-1 : groups[(idx-1+groups.length)%groups.length][1];
   render();
 }
 document.addEventListener('keydown',e=>{
@@ -151,5 +151,3 @@ render();
 </script>
 </body>
 </html>
-
-
